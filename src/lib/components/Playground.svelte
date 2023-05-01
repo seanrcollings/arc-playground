@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PyodideInterface } from "pyodide";
-  import Terminal from "../Terminal.svelte";
+  import Terminal from "./Terminal.svelte";
   import Editor from "./Editor.svelte";
   import { editor } from "$lib/stores";
   import { ExecutionHandler } from "$lib/executionHandler";
@@ -14,7 +14,10 @@
   const handler = new ExecutionHandler(pyodide);
 
   async function execute(code: string, input: string = "") {
-    executions = [...executions, { id: id++, input, output: "" }];
+    executions = [
+      ...executions,
+      { id: id++, input, output: "", file: example.file },
+    ];
 
     await handler.execute({
       code,
@@ -39,7 +42,7 @@
     on:clear={() => {
       executions = [];
     }}
-    prefix="python {example.file}"
+    {example}
     {executions}
   />
 </div>

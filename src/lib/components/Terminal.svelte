@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import Convert from "ansi-to-html";
 
-  export let prefix: string = "python example.py";
+  export let example: ArcExample;
   export let executions: ArcExecution[];
 
   const convert = new Convert();
@@ -54,19 +54,21 @@
     </button>
   </div>
   <label for="terminal" class="block overflow-y-auto whitespace-pre px-2 h-64">
-    {#each executions as exececution (exececution.id)}
+    {#each executions as execution (execution.id)}
       <div>
-        <span class="text-gray-400">$ {prefix}</span>
-        {exececution.input}
+        <span class="text-gray-400">$ python {execution.file}</span>
+        {execution.input}
         <div>
-          {@html formatOutput(exececution.output)}
+          {@html formatOutput(execution.output)}
         </div>
       </div>
       <br />
     {/each}
 
     <div class="flex gap-2" bind:this={wrapper}>
-      <span class="whitespace-nowrap text-gray-400">$ {prefix}</span>
+      <span class="whitespace-nowrap text-gray-400"
+        >$ python {example.file}</span
+      >
       <input
         type="text"
         class="bg-transparent outline-none w-full"

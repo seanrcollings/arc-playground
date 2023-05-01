@@ -12,6 +12,7 @@ declare global {
     id: number;
     input: string;
     output: string;
+    file: string;
   }
 
   interface ArcExample {

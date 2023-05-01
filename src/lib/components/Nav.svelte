@@ -1,6 +1,9 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { fly } from "svelte/transition";
+
   export let examples: ArcExample[];
+
   let open = false;
 </script>
 
@@ -39,13 +42,25 @@
       </button>
 
       <div class="border-t border-t-slate-500 pt-2 mt-2">
-        <h1 class="text-xl font-bold">Examples</h1>
+        <h1 class="text-xl font-bold mb-2">Examples</h1>
         <ul>
           {#each examples as example}
-            <li class="p-2 hover:bg-slate-600 transition-colors rounded-sm">
-              <a href="/examples/{example.slug}">
+            <li
+              class="p-2 my-2 hover:bg-slate-600 transition-colors rounded-sm"
+              class:bg-blue={$page.params.slug === example.slug}
+            >
+              <a
+                href="/examples/{example.slug}"
+                on:click={() => (open = !open)}
+              >
                 <h3>{example.name}</h3>
-                <p class="text-sm text-gray-500">{example.description}</p>
+                <p
+                  class:text-gray-200={$page.params.slug === example.slug}
+                  class:text-gray-500={$page.params.slug !== example.slug}
+                  class="text-sm"
+                >
+                  {example.description}
+                </p>
               </a>
             </li>
           {/each}

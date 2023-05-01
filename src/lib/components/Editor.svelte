@@ -67,6 +67,12 @@
       }
     );
   });
+
+  $: {
+    if ($editor) {
+      $editor.setValue(code);
+    }
+  }
 </script>
 
 <svelte:window on:resize={() => $editor && $editor.layout()} />
