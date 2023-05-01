@@ -52,6 +52,7 @@
   :global(html),
   :global(body) {
     height: 100%;
+    overflow-x: hidden;
     background-color: theme(colors.slate.700);
   }
 </style>

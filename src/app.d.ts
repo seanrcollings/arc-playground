@@ -23,6 +23,12 @@ declare global {
     file: string;
   }
 
+  interface AppNotification {
+    id: number;
+    type: "info" | "error";
+    message: string;
+  }
+
   type ArcExampleIndex = Omit<ArcExample, "code">;
 }
 

@@ -2,10 +2,10 @@
   import { page } from "$app/stores";
   import { fly } from "svelte/transition";
 
-  export let examples: ArcExample[];
+  export let examples: ArcExampleIndex[];
 
   let search = "";
-  let open = true;
+  let open = false;
 
   $: filteredExamples = search
     ? examples.filter((example) =>
@@ -68,7 +68,7 @@
         <ul class="max-h-[68vh] overflow-y-auto p-1">
           {#each filteredExamples as example}
             <li
-              class="p-1 my-2 hover:bg-slate-600 transition-colors rounded-sm"
+              class="p-2 my-2 mr-1 hover:bg-slate-600 transition-colors rounded-sm"
               class:bg-blue={$page.params.slug === example.slug}
             >
               <a
