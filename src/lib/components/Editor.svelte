@@ -2,7 +2,8 @@
   import { onMount } from "svelte";
   import { editor } from "$lib/stores";
   import Spinner from "./Spinner.svelte";
-  import { fade } from "svelte/transition";
+
+  export let code = "";
 
   let loading = true;
 
@@ -60,15 +61,7 @@
     $editor = monaco.editor.create(
       document.getElementById("editor-container")!,
       {
-        value: `
-import arc
-
-@arc.command
-def command():
-    print("Hello, world!")
-
-command()
-            `,
+        value: code,
         language: "python",
         theme: "vs-dark",
       }

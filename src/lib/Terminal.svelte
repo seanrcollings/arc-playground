@@ -30,6 +30,7 @@
     dispatch("execute", {
       input: commandline,
     });
+    commandline = "";
   }
 
   function formatOutput(output: string) {
@@ -74,7 +75,6 @@
         on:keyup={(e) => {
           if (e.key === "Enter") {
             execute();
-            commandline = "";
           } else if (e.key === "ArrowUp") {
             if (historyIndex > 0) {
               historyIndex--;

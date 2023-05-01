@@ -5,5 +5,8 @@
 </script>
 
 <div in:fade={{ duration: 500 }} class="h-full">
-  <Playground pyodide={$pyodide} />
+  <Playground
+    pyodide={$pyodide}
+    example={{ code: "", description: "", name: "", slug: "" }}
+  />
 </div>

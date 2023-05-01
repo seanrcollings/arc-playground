@@ -13,6 +13,16 @@ declare global {
     input: string;
     output: string;
   }
+
+  interface ArcExample {
+    slug: string;
+    name: string;
+    description: string;
+    code: string;
+    file: string;
+  }
+
+  type ArcExampleIndex = Omit<ArcExample, "code">;
 }
 
 export {};

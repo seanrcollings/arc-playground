@@ -5,8 +5,19 @@
   import { loadPyodide } from "pyodide";
   import { pyodide } from "$lib/stores";
   import Spinner from "$lib/components/Spinner.svelte";
+  import Nav from "$lib/components/Nav.svelte";
+  import type { PageData } from "./$types";
+  import { page } from "$app/stores";
+
+  export let data: PageData;
+  let loading = true;
 
   onMount(async () => {
+    if ($page.status !== 200) {
+      loading = false;
+      return;
+    }
+
     const localPyodide = await loadPyodide({ indexURL: "/pyodide/" });
     await localPyodide.loadPackage("micropip");
     const micropip = localPyodide.pyimport("micropip");
@@ -19,12 +30,13 @@
     }
 
     $pyodide = localPyodide;
+    loading = false;
   });
 </script>
 
-{#if $pyodide}
+{#if !loading}
   <div class="h-full flex">
-    <nav class="w-20">test</nav>
+    <Nav examples={data.examples} />
     <main class="h-full w-full">
       <slot />
     </main>

@@ -6,6 +6,7 @@
   import { ExecutionHandler } from "$lib/executionHandler";
 
   export let pyodide: PyodideInterface;
+  export let example: ArcExample;
 
   let id = 1;
   let executions: ArcExecution[] = [];
@@ -29,7 +30,7 @@
 </script>
 
 <div class="flex flex-col h-full">
-  <Editor />
+  <Editor code={example.code} />
 
   <Terminal
     on:execute={(e) => {
@@ -38,6 +39,7 @@
     on:clear={() => {
       executions = [];
     }}
+    prefix="python {example.file}"
     {executions}
   />
 </div>
