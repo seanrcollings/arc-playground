@@ -4,7 +4,14 @@
 
   export let examples: ArcExample[];
 
-  let open = false;
+  let search = "";
+  let open = true;
+
+  $: filteredExamples = search
+    ? examples.filter((example) =>
+        example.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : examples;
 </script>
 
 <nav class="w-10 flex flex-col justify-between bg-slate-800 text-white">
@@ -16,11 +23,15 @@
       <i class="material-symbols-outlined">menu</i>
     </button>
   </div>
-  <div class="w-full h-20 flex items-center justify-center bg-blue">
+  <div
+    class="w-full h-20 flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 transition-colors"
+  >
     <a
       href="https://arc.seancollings.dev"
       class="p-2 text-white font-bold"
       title="Arc Documentation"
+      target="_blank"
+      rel="noreferrer noopener"
     >
       <i class="material-symbols-outlined">description</i>
     </a>
@@ -43,10 +54,21 @@
 
       <div class="border-t border-t-slate-500 pt-2 mt-2">
         <h1 class="text-xl font-bold mb-2">Examples</h1>
-        <ul>
-          {#each examples as example}
+        <div
+          class="flex items-center mb-1 bg-black opacity-40 focus-within:opacity-60 p-1 gap-1 rounded-md focus-within:ring-2 focus-within:ring-indigo-500 transition-opacity"
+        >
+          <i class="material-symbols-outlined">search</i>
+          <input
+            type="text"
+            placeholder="Search..."
+            bind:value={search}
+            class="bg-transparent w-full outline-none"
+          />
+        </div>
+        <ul class="max-h-[68vh] overflow-y-auto p-1">
+          {#each filteredExamples as example}
             <li
-              class="p-2 my-2 hover:bg-slate-600 transition-colors rounded-sm"
+              class="p-1 my-2 hover:bg-slate-600 transition-colors rounded-sm"
               class:bg-blue={$page.params.slug === example.slug}
             >
               <a
@@ -67,14 +89,31 @@
         </ul>
       </div>
     </div>
-    <div class="w-full h-20 flex items-center justify-center bg-blue">
+    <div class="">
       <a
         href="https://arc.seancollings.dev"
-        class="p-2 text-white font-bold flex items-center text-md gap-2"
+        class="h-20 p-2 text-white font-bold flex items-center text-md gap-2 bg-indigo-600 hover:bg-indigo-500 transition-colors"
         target="_blank"
+        rel="noreferrer noopener"
       >
         <i class="material-symbols-outlined">description</i>
         Arc Documentation
+      </a>
+      <a
+        href="https://github.com/seanrcollings/arc"
+        class="h-20 p-2 text-white font-bold flex items-center text-md gap-2 bg-orange-500 hover:bg-orange-400 transition-colors"
+        target="_blank"
+      >
+        <i class="material-symbols-outlined">code</i>
+        Arc Sourcecode
+      </a>
+      <a
+        href="https://github.com/seanrcollings/arc-playground"
+        class="h-20 p-2 text-white font-bold flex items-center text-md gap-2 bg-orange-700 hover:bg-orange-600 transition-colors"
+        target="_blank"
+      >
+        <i class="material-symbols-outlined">code</i>
+        Playground Sourcecode
       </a>
     </div>
   </div>
