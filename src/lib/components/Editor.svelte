@@ -61,13 +61,13 @@
       document.getElementById("editor-container")!,
       {
         value: `
-    import arc
+import arc
 
-    @arc.command
-    def command():
-        print("Hello, world!")
+@arc.command
+def command():
+    print("Hello, world!")
 
-    command()
+command()
             `,
         language: "python",
         theme: "vs-dark",
@@ -80,12 +80,15 @@
 
 <div id="editor-container" class="flex-grow bg-slate-700">
   {#if loading}
-    <h1
-      class="flex items-center justify-center h-full text-white text-2xl"
-      out:fade
-    >
+    <h1 class="flex items-center justify-center h-full text-white text-2xl">
       <Spinner />
       <span> Loading editor... </span>
     </h1>
   {/if}
 </div>
+
+<style>
+  h1 {
+    background-color: #1e1e1e;
+  }
+</style>

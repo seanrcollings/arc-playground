@@ -22,7 +22,7 @@
     }
   }
 
-  function onEnter() {
+  function execute() {
     if (commandline !== "") {
       history.push(commandline);
       history = history;
@@ -37,9 +37,20 @@
   }
 </script>
 
-<div class="bg-gray-900 text-gray-300 max-h-1/4 font-mono flex flex-col">
+<div class="bg-zinc-900 text-gray-300 max-h-1/4 font-mono flex flex-col">
   <div class="border-y border-y-gray-700 px-2">
-    <button>clear</button>
+    <button
+      on:click={() => execute()}
+      class="hover:bg-slate-800 p-1 transition-colors"
+    >
+      run
+    </button>
+    <button
+      on:click={() => dispatch("clear")}
+      class="hover:bg-slate-800 p-1 transition-colors"
+    >
+      clear
+    </button>
   </div>
   <label for="terminal" class="block overflow-y-auto whitespace-pre px-2 h-64">
     {#each executions as exececution (exececution.id)}
@@ -62,7 +73,7 @@
         bind:value={commandline}
         on:keyup={(e) => {
           if (e.key === "Enter") {
-            onEnter();
+            execute();
             commandline = "";
           } else if (e.key === "ArrowUp") {
             if (historyIndex > 0) {

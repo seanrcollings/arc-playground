@@ -35,6 +35,9 @@
     on:execute={(e) => {
       execute($editor?.getValue() || "", e.detail.input);
     }}
+    on:clear={() => {
+      executions = [];
+    }}
     {executions}
   />
 </div>
