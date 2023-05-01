@@ -43,6 +43,7 @@
 
     try {
       await handler.execute({
+        file: example.file,
         code,
         input,
         onOutput: (output) => {

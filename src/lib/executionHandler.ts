@@ -1,6 +1,7 @@
 import type { PyodideInterface } from "pyodide";
 
 interface ExecutionOptions {
+  file: string;
   code: string;
   input: string;
   onOutput: (output: string) => void;
@@ -12,6 +13,7 @@ export class ExecutionHandler {
   }
 
   public async execute({
+    file,
     code,
     input,
     onOutput,
@@ -37,7 +39,7 @@ export class ExecutionHandler {
     });
 
     try {
-      await this.pyodide.runPython(this.preprocess(code, input));
+      await this.pyodide.runPython(this.preprocess(code, input, file));
     } catch (e: any) {
       if (e.name === "PythonError") {
         if (e.type !== "Exit") {
@@ -49,11 +51,11 @@ export class ExecutionHandler {
     }
   }
 
-  private preprocess(code: string, input: string): string {
+  private preprocess(code: string, input: string, file: string): string {
     return `
 import sys
 import shlex
-sys.argv = ["example.py", *shlex.split("${input}")]
+sys.argv = ["${file}", *shlex.split("${input}")]
 
 ${code}
 `;
