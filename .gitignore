@@ -1,4 +1,4 @@
-static/pyodide
+# static/pyodide
 .DS_Store
 node_modules
 /build
