@@ -19,12 +19,12 @@
   </button>
 
   <div
-    class="absolute bg-zinc-800 top-11 p-2 rounded-md border border-zinc-600 max-w-xl"
+    class="absolute bg-zinc-800 top-11 p-2 rounded-md border border-zinc-600 max-w-3xl overflow-x-auto"
     class:hidden={!open}
   >
     {#each suggestions as suggestion}
       <button
-        class="font-mono hover:bg-zinc-700 w-full text-left p-2 rounded-md whitespace-nowrap text-ellipsis"
+        class="font-mono hover:bg-zinc-700 w-full text-left p-2 rounded-md whitespace-nowrap text-ellipsis block"
         on:click={() => {
           dispatcher("choose", suggestion);
           open = false;
