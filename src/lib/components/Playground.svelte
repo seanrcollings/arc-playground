@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PyodideInterface } from "pyodide";
-  import Terminal from "./Terminal.svelte";
+  import Terminal from "./terminal/Terminal.svelte";
   import Editor from "./Editor.svelte";
   import { editor } from "$lib/stores";
   import { ExecutionHandler } from "$lib/executionHandler";
@@ -58,6 +58,10 @@
     }
   }
 </script>
+
+<svelte:head>
+  <title>Arc Playground</title>
+</svelte:head>
 
 <div class="flex flex-col h-full">
   <Editor code={example.code} />

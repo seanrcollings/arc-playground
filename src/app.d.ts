@@ -21,6 +21,7 @@ declare global {
     description: string;
     code: string;
     file: string;
+    suggestions: string[];
   }
 
   interface AppNotification {

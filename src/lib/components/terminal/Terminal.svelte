@@ -1,6 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import Convert from "ansi-to-html";
+  import ActionButton from "./ActionButton.svelte";
+  import InputSuggestions from "./InputSuggestions.svelte";
 
   export let example: ArcExample;
   export let executions: ArcExecution[];
@@ -40,28 +42,25 @@
 
 <div class="bg-zinc-900 text-gray-300 max-h-1/4 flex flex-col">
   <div class="border-y border-y-gray-700 flex p-1 gap-2">
-    <button
-      on:click={() => execute()}
-      class="hover:bg-black opacity-40 p-1 pr-2 transition-colors flex items-center gap-1 rounded-sm"
-    >
-      <i class="material-symbols-outlined">play_arrow</i>
-      run
-    </button>
-    <button
-      on:click={() => dispatch("clear")}
-      class="hover:bg-black opacity-40 p-1 pr-2 transition-colors flex items-center gap-1 rounded-sm"
-    >
-      <i class="material-symbols-outlined">delete</i>
+    <ActionButton icon="play_arrow" on:click={execute}>run</ActionButton>
+    <ActionButton icon="delete" on:click={() => dispatch("clear")}>
       clear
-    </button>
+    </ActionButton>
+    {#if example.suggestions.length > 0}
+      <InputSuggestions
+        file={example.file}
+        suggestions={example.suggestions}
+        on:choose={(e) => (commandline = e.detail)}
+      />
+    {/if}
 
-    <button
+    <ActionButton
+      icon="share"
       on:click={() => dispatch("share")}
-      class="hover:bg-black opacity-40 p-1 pr-2 transition-colors flex items-center gap-1 rounded-sm ml-auto"
+      class="ml-auto"
     >
-      <i class="material-symbols-outlined">share</i>
       share
-    </button>
+    </ActionButton>
   </div>
   <label
     for="terminal"
