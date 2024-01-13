@@ -13,6 +13,7 @@
       name: "",
       slug: "",
       file: "example.py",
+      suggestions: [],
     }}
   />
 </div>

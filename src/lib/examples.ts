@@ -1,8 +1,8 @@
 import { dev } from "$app/environment";
 import { error } from "@sveltejs/kit";
-import { GITHUB_API_TOKEN } from "$env/static/private";
 
-const url = "https://api.github.com/gists/c314336f9ddf2c95144412121203a17c";
+const url =
+  "https://gist.githubusercontent.com/seanrcollings/091312f9198166487398d7a0a1b2b44c/raw/arc-examples.json";
 let exampleCache: ArcExampleIndex[] | null = null;
 
 export async function getExampleIndex(
@@ -12,15 +12,15 @@ export async function getExampleIndex(
     return exampleCache;
   }
 
-  const res = await http(url, {
-    headers: {
-      Authorization: `Bearer ${GITHUB_API_TOKEN}`,
-    },
-  });
+  const res = await http(url);
+
+  if (!res.ok) {
+    throw error(res.status, `Could not fetch examples`);
+  }
+
   const json = await res.json();
-  const index = JSON.parse(json.files["arc-examples.json"].content);
-  exampleCache = index;
-  return index;
+  exampleCache = json;
+  return json;
 }
 
 export async function getExample(
@@ -35,14 +35,25 @@ export async function getExample(
   }
 
   const codeRes = await http(
-    `https://raw.githubusercontent.com/seanrcollings/arc/master/docs/examples/${example.file}`,
-    {
-      headers: {
-        Authorization: `Bearer ${GITHUB_API_TOKEN}`,
-      },
-    }
+    `https://raw.githubusercontent.com/seanrcollings/arc/main/docs/examples/${example.file}`
   );
   const code = await codeRes.text();
 
   return { ...example, code };
 }
+
+export const FALLBACK_EXAMPLE: ArcExample = {
+  slug: "hello-world",
+  name: "Hello World",
+  description: "A simple example",
+  file: "hello_world.py",
+  code: `import arc
+
+  @arc.command
+  def hello(name: str):
+      print(f"Hello, {name}!")
+
+  hello()
+  `,
+  suggestions: ["--help"],
+};
